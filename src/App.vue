@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue';
+import NavBar from './components/NavBar.vue'
 </script>
 
 <template>
-  <HelloWorld />
+  <div id="app" v-cloak>
+    <NavBar />
+    <router-view />
+  </div>
 </template>
 
 <style scoped>
+/* Estilos opcionales */
 </style>

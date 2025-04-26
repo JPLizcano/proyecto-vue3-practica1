@@ -16,3 +16,6 @@ Learn more about the recommended Project Setup and IDE Support in the [Vue Docs 
      })
 3. Import the tailwind module inside your style.css file:
    - @import "tailwindcss";
+
+*** vue router ***
+1. npm install vue-router@4
