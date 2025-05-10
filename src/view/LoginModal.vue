@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+// import axios from 'axios';
+// import { API_URL } from '../config/api';
 import { useAlert } from '../composables/useAlert';
 import CustomAlert from '../components/CustomAlert.vue';
 import LoadingView from '../components/LoadingView.vue';
-import { API_URL } from '../config/api';
-import axios from 'axios';
+import { useAuthStore } from '../store/useAuthStore';
 
 const props = withDefaults(defineProps<{
     isOpen: boolean
@@ -16,16 +17,9 @@ const isLoading = ref(false);
 const user = ref("");
 const pass = ref("");
 const { showAlert } = useAlert();
+const authStore = useAuthStore();
 
-interface LoginResponse {
-    resultado: {
-        Nombre: string;
-        Apellido: string;
-    } | null
-    mensaje: string;
-}
-
-const login = async (): Promise<void> => {
+const login = async () => {
     try {
         isLoading.value = true;
         if (!user.value) {
@@ -40,36 +34,21 @@ const login = async (): Promise<void> => {
             return;
         }
 
-        const response = await axios.post(`${API_URL}/auth/login`, {
-            Usuario: user.value, Clave: pass.value,
-            withCredentials: true, // Esto envía la cookie HttpOnly
-        })
+        await authStore.login(user.value, pass.value);
+        isLoading.value = false;
 
-        if (response.status !== 200) {
-            showAlert(response.data.mensaje, "error", 2500);
-            return;
-        }
-
-        console.log(response)
-        const data: LoginResponse = await response.data;
-        console.log(data)
-        
-        if (!data.resultado) {
-            console.log(data.mensaje)
-            showAlert(data.mensaje, "error", 2500);
-            isLoading.value = false;
+        if (authStore.isAuthenticated) {
+            console.log("Usuario autenticado:", authStore.user);
         } else {
-            // const authStore = useAuthStore();
-            console.log(data.resultado)
-            console.log(`${data.resultado.Nombre.split(' ', 1)} ${data.resultado.Apellido.split(' ', 1)}`)
-
-            setTimeout(() => {
-                user.value = ""
-                pass.value = ""
-                closeModal()
-                isLoading.value = false;
-            }, 500);
+            console.log("Error en la autenticación");
         }
+        setTimeout(() => {
+            user.value = ""
+            pass.value = ""
+            closeModal()
+            isLoading.value = false;
+        }, 500);
+
     } catch (error) {
         console.log(error);
         showAlert("Error en el servidor", "error", 2500);
