@@ -1,15 +1,24 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAlert } from '../composables/useAlert';
 import CustomAlert from '../components/CustomAlert.vue';
 import LoadingView from '../components/LoadingView.vue';
 import axios from 'axios';
 import { API_URL } from '../config/api';
+import { useAuthStore } from '../store/useAuthStore';
 
 const { showAlert } = useAlert();
+const authStore = useAuthStore();
 const router = useRouter();
 const isLoading = ref(false);
+
+onMounted(async () => {
+    await authStore.checkSession();
+    if (authStore.isAuthenticated) {
+        router.push('/');
+    }
+})
 
 const registro = async () => {
     try {

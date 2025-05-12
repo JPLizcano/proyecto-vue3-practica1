@@ -5,6 +5,7 @@ import LoginModal from '../view/LoginModal.vue';
 import { useAuthStore } from '../store/useAuthStore';
 
 const authStore = useAuthStore();
+
 const dropdownItems = [
     { label: "Perfil", action: () => console.log("Ver perfil"), color: "rgb(255,100,0)", bg: "rgb(255,100,0,0.15)", to: "/perfil" },
     { label: "Cerrar sesión", action: () => authStore.logout(), color: "rgb(255,0,0)", bg: "rgb(255,0,0,0.15)", to: "/" },

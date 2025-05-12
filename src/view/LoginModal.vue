@@ -6,6 +6,7 @@ import { useAlert } from '../composables/useAlert';
 import CustomAlert from '../components/CustomAlert.vue';
 import LoadingView from '../components/LoadingView.vue';
 import { useAuthStore } from '../store/useAuthStore';
+import { useRouter } from 'vue-router';
 
 const props = withDefaults(defineProps<{
     isOpen: boolean
@@ -13,11 +14,12 @@ const props = withDefaults(defineProps<{
     isOpen: false
 })
 
+const { showAlert } = useAlert();
+const router = useRouter();
+const authStore = useAuthStore();
 const isLoading = ref(false);
 const user = ref("");
 const pass = ref("");
-const { showAlert } = useAlert();
-const authStore = useAuthStore();
 
 const login = async () => {
     try {
@@ -46,6 +48,7 @@ const login = async () => {
             pass.value = ""
             closeModal()
             isLoading.value = false;
+            router.push('/');
         }, 500);
 
     } catch (error) {

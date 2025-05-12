@@ -8,7 +8,7 @@ const { showAlert } = useAlert();
 
 export const useAuthStore = defineStore('auth', () => {
     const isAuthenticated = ref(false);
-    const user = ref<{ Nombre: string; Apellido: string; } | null>(null);
+    const user = ref<{ Nombre: string; Apellido: string; idUsuario: number } | null>(null);
 
     // Iniciar sesion
     async function login(username: string, password: string) {
@@ -32,7 +32,7 @@ export const useAuthStore = defineStore('auth', () => {
                 showAlert(data.mensaje, "error", 2500);
             } else {
                 isAuthenticated.value = true;
-                user.value = { Nombre: data.resultado.Nombre, Apellido: data.resultado.Apellido };
+                user.value = { Nombre: data.resultado.Nombre, Apellido: data.resultado.Apellido, idUsuario: data.resultado.ID };
             }
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {

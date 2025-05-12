@@ -21,9 +21,17 @@ router.beforeEach(async (to, from, next) => {
 
     if (to.meta.requiresAuth) {
         await authStore.checkSession();
-        
+
         if (!authStore.isAuthenticated) {
             return next('/'); // Redirige al Home si no está autenticado
+        }
+    }
+
+    if (to.name === "Registro") {
+        await authStore.checkSession();
+
+        if (authStore.isAuthenticated) {
+            return next('/');
         }
     }
     next();
