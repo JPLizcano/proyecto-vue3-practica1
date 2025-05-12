@@ -37,11 +37,11 @@ const login = async () => {
         await authStore.login(user.value, pass.value);
         isLoading.value = false;
 
-        if (authStore.isAuthenticated) {
-            console.log("Usuario autenticado:", authStore.user);
-        } else {
-            console.log("Error en la autenticación");
-        }
+        // if (authStore.isAuthenticated) {
+        //     console.log("Usuario autenticado:", authStore.user);
+        // } else {
+        //     console.log("Error en la autenticación");
+        // }
         setTimeout(() => {
             user.value = ""
             pass.value = ""

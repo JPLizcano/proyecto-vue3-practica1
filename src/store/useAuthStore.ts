@@ -10,12 +10,6 @@ export const useAuthStore = defineStore('auth', () => {
     const isAuthenticated = ref(false);
     const user = ref<{ Nombre: string; Apellido: string; } | null>(null);
 
-    if (localStorage.getItem('auth')) {
-        const storedData = JSON.parse(localStorage.getItem('auth')!);
-        isAuthenticated.value = storedData.isAuthenticated;
-        user.value = storedData.user;
-    }
-
     // Iniciar sesion
     async function login(username: string, password: string) {
         try {
@@ -39,11 +33,6 @@ export const useAuthStore = defineStore('auth', () => {
             } else {
                 isAuthenticated.value = true;
                 user.value = { Nombre: data.resultado.Nombre, Apellido: data.resultado.Apellido };
-
-                localStorage.setItem('auth', JSON.stringify({
-                    isAuthenticated: isAuthenticated.value,
-                    user: user.value,
-                }));
             }
         } catch (error) {
             console.log(error);
@@ -53,20 +42,16 @@ export const useAuthStore = defineStore('auth', () => {
     // Verificar sesión al cargar
     async function checkSession() {
         try {
-            const response = await axios.get(`${API_URL}/auth/verificar`, { withCredentials: true });
+            const response = await axios.get(`${API_URL}/auth/verificar`, {
+                withCredentials: true
+            });
 
-            console.log(response)
-            if (response?.data?.usuario[0]) {
+            // console.log(response)
+            if (response.data.usuario && response.data.usuario[0]) {
                 user.value = response.data.usuario[0];
                 isAuthenticated.value = true;
-
-                localStorage.setItem('auth', JSON.stringify({
-                    isAuthenticated: isAuthenticated.value,
-                    user: user.value,
-                }));
             }
         } catch (error) {
-            localStorage.removeItem('auth');
             console.error(error);
         }
     }
@@ -79,8 +64,6 @@ export const useAuthStore = defineStore('auth', () => {
             });
             user.value = null;
             isAuthenticated.value = false;
-
-            localStorage.removeItem('auth');
         } catch (error) {
             console.error("Error al cerrar sesión:", error);
         }

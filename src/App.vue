@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import NavBar from './components/NavBar.vue';
 import { useAuthStore } from './store/useAuthStore';
+import { onMounted } from 'vue';
 
 const authStore = useAuthStore();
-authStore.checkSession();
+
+onMounted(async () => {
+  await authStore.checkSession();
+})
 </script>
 
 <template>
