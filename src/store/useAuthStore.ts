@@ -22,7 +22,7 @@ export const useAuthStore = defineStore('auth', () => {
             // console.log(response)
             if (response.status !== 200) {
                 showAlert(response.data.mensaje, "error", 2500);
-                return;
+                return response.data.mensaje;
             }
 
             const data = await response.data;
@@ -35,7 +35,12 @@ export const useAuthStore = defineStore('auth', () => {
                 user.value = { Nombre: data.resultado.Nombre, Apellido: data.resultado.Apellido };
             }
         } catch (error) {
-            console.log(error);
+            if (axios.isAxiosError(error) && error.response) {
+                showAlert(error.response.data.mensaje, "error", 2500);
+                return error.status
+            } else {
+                return showAlert("Ha ocurrido un error inesperado", "error", 2500);
+            }
         }
     }
 
@@ -46,7 +51,7 @@ export const useAuthStore = defineStore('auth', () => {
                 withCredentials: true
             });
 
-            // console.log(response)
+            // console.log("checkSession:", response)
             if (response.data.usuario && response.data.usuario[0]) {
                 user.value = response.data.usuario[0];
                 isAuthenticated.value = true;

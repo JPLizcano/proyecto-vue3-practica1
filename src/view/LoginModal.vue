@@ -34,14 +34,13 @@ const login = async () => {
             return;
         }
 
-        await authStore.login(user.value, pass.value);
-        isLoading.value = false;
+        const log = await authStore.login(user.value, pass.value);
 
-        // if (authStore.isAuthenticated) {
-        //     console.log("Usuario autenticado:", authStore.user);
-        // } else {
-        //     console.log("Error en la autenticación");
-        // }
+        if (log) {
+            isLoading.value = false;
+            return;
+        }
+
         setTimeout(() => {
             user.value = ""
             pass.value = ""
