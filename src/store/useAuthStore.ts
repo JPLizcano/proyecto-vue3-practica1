@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
 
             // console.log(response)
             if (response.status !== 200) {
-                showAlert(response.data.mensaje, "error", 2500);
+                showAlert(response.data.mensaje, "error");
                 return response.data.mensaje;
             }
 
@@ -29,17 +29,17 @@ export const useAuthStore = defineStore('auth', () => {
             // console.log(data)
 
             if (!data.resultado) {
-                showAlert(data.mensaje, "error", 2500);
+                showAlert(data.mensaje, "error");
             } else {
                 isAuthenticated.value = true;
                 user.value = { Nombre: data.resultado.Nombre, Apellido: data.resultado.Apellido, idUsuario: data.resultado.ID };
             }
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
-                showAlert(error.response.data.mensaje, "error", 2500);
+                showAlert(error.response.data.mensaje, "error");
                 return error.status
             } else {
-                return showAlert("Ha ocurrido un error inesperado", "error", 2500);
+                return showAlert("Ha ocurrido un error inesperado", "error");
             }
         }
     }

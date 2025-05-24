@@ -36,7 +36,7 @@ onMounted(async () => {
         isLoading.value = false;
     } catch (error) {
         console.error(error);
-        showAlert("Error al cargar datos del usuario", "error", 2500);
+        showAlert("Error al cargar datos del usuario", "error");
         isLoading.value = false;
     }
 })
@@ -91,17 +91,17 @@ const ActualizarDatos = async () => {
         setTimeout(() => {
             if (response.data[0][0].Mensaje !== "Datos actualizados con éxito") {
                 console.log(data)
-                showAlert(response.data[0][0].Mensaje, "error", 3000)
+                showAlert(response.data[0][0].Mensaje, "error")
             } else {
                 Object.keys(formData).forEach((key) => {
                     (formData as any)[key] = data[key] || '';
                 });
-                showAlert(response.data[0][0].Mensaje, "success", 3000)
+                showAlert(response.data[0][0].Mensaje, "success")
             }
             isLoading.value = false;
         }, 500);
     } catch (error) {
-        showAlert("Error al actualizar los datos", "error", 3000)
+        showAlert("Error al actualizar los datos", "error")
         console.log(error);
     }
 }

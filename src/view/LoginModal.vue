@@ -28,13 +28,13 @@ const login = async () => {
     try {
         isLoading.value = true;
         if (!user.value) {
-            showAlert("Ingrese su usuario", "error", 2500);
+            showAlert("Ingrese su usuario", "error");
             isLoading.value = false;
             return;
         }
 
         if (!pass.value) {
-            showAlert("Ingrese su contraseña", "error", 2500);
+            showAlert("Ingrese su contraseña", "error");
             isLoading.value = false;
             return;
         }
@@ -56,7 +56,7 @@ const login = async () => {
 
     } catch (error) {
         console.log(error);
-        showAlert("Error en el servidor", "error", 2500);
+        showAlert("Error en el servidor", "error");
     }
 }
 

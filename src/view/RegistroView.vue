@@ -33,23 +33,23 @@ const registro = async () => {
         for (const [key, value] of Object.entries(formData)) {
             if (!value) {
                 if (key == "Clave") {
-                    showAlert(`El campo contraseña es obligatorio.`, "error", 2000);
+                    showAlert(`El campo contraseña es obligatorio.`, "error");
                     isLoading.value = false;
                     return false;
                 }
                 if (key == "ConfirmarClave") {
-                    showAlert(`El campo confirmar contraseña es obligatorio.`, "error", 2000);
+                    showAlert(`El campo confirmar contraseña es obligatorio.`, "error");
                     isLoading.value = false;
                     return false;
                 }
-                showAlert(`El campo ${key} es obligatorio.`, "error", 2000);
+                showAlert(`El campo ${key} es obligatorio.`, "error");
                 isLoading.value = false;
                 return false;
             }
         }
 
         if (formData.Clave != formData.ConfirmarClave) {
-            showAlert(`Las contraseñas deben ser iguales`, "error", 2000);
+            showAlert(`Las contraseñas deben ser iguales`, "error");
             isLoading.value = false;
             return false;
         }
@@ -70,17 +70,17 @@ const registro = async () => {
         })
 
         if (response.status !== 200) {
-            showAlert(response.data.mensaje, "error", 2500);
+            showAlert(response.data.mensaje, "error");
             return;
         }
         const data = await response.data;
 
         if (data[0][0].Mensaje != "Usuario creado con éxito") {
-            showAlert(data[0][0].Mensaje, "error", 3000);
+            showAlert(data[0][0].Mensaje, "error");
             isLoading.value = false;
             return;
         } else {
-            showAlert(data[0][0].Mensaje, "success", 3000);
+            showAlert(data[0][0].Mensaje, "success");
             setTimeout(() => {
                 isLoading.value = false;
                 router.push('/');
@@ -88,7 +88,7 @@ const registro = async () => {
         }
     } catch (error) {
         isLoading.value = false;
-        showAlert("Error inesperado con el registro", "error", 2000);
+        showAlert("Error inesperado con el registro", "error");
         console.log(error)
     }
 }
