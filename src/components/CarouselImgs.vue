@@ -43,6 +43,12 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.carousel-inner {
+    height: 243px;
+    border-radius: 9px;
+    box-shadow: 0px 0px 15px 0px gray;
+}
+
 .left-full {
     left: -100%;
 }

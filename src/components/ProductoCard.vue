@@ -10,7 +10,7 @@ const { producto } = defineProps<{ producto: Producto }>()
 </script>
 
 <template>
-    <div class="w-60 rounded-lg border border-gray-300 bg-white p-4 mb-5" id="PrCard">
+    <div class="w-60 rounded-lg border border-gray-300 bg-[rgb(255,250,245)] p-4 mb-5">
         <div class="flex justify-center">
             <img :src="producto.imagen" :alt="producto.nombre" class="w-32 h-32 object-cover rounded-md">
         </div>
@@ -23,5 +23,4 @@ const { producto } = defineProps<{ producto: Producto }>()
 </template>
 
 <style scoped>
-
 </style>
