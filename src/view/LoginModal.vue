@@ -71,7 +71,7 @@ function closeModal() {
     <LoadingView :msg="'Cargando...'" :isLoad="isLoading" @close="isLoading = false" class="z-20" />
     <div v-if="props.isOpen"
         class="z-10 fixed inset-0 flex items-center justify-center bg-[rgba(0,0,0,0.5)] backdrop-blur-sm">
-        <div class="bg-[rgba(255,255,255,0.5)] p-6 rounded-lg shadow-lg w-96 relative">
+        <div class="bg-[rgba(255,255,255,0.6)] p-6 rounded-lg shadow-lg w-96 relative">
             <button class="absolute top-2 right-3 text-gray-500 hover:text-gray-700 cursor-pointer"
                 @click="closeModal">✖</button>
             <h2 class="mb-3 mt-2 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Iniciar sesión</h2>
@@ -103,9 +103,9 @@ function closeModal() {
                         <div class="w-full flex justify-center mt-4 text-sm">
                             No tengo cuenta.
                             <button @click="closeModal">
-                                <a href="/registro" class="ml-1 text-[rgb(255,90,0)] hover:text-[rgb(255,120,0)]">
+                                <router-link to="/registro" class="ml-1 text-[rgb(255,90,0)] hover:text-[rgb(255,120,0)] font-bold">
                                     Registrarme
-                                </a>
+                                </router-link>
                             </button>
                         </div>
                     </div>

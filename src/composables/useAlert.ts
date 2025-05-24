@@ -1,26 +1,56 @@
 import { ref } from 'vue';
 
 const visible = ref(false);
-const tipo = ref('success');
+const tipo = ref<'success' | 'error' | 'warning'>('success');
 const mensaje = ref('');
 const duracion = ref(2500);
 
+let timeout: ReturnType<typeof setTimeout>;
+let startTime: number;
+let remaining = duracion.value;
+
 export function useAlert() {
-    function showAlert(msg: string, type: string = 'success', time: number = 2500) {
+    function showAlert(msg: string, type: typeof tipo.value = 'success', time: number = 2500) {
         mensaje.value = msg;
         tipo.value = type;
         duracion.value = time;
         visible.value = true;
 
-        setTimeout(() => {
+        if (timeout) clearTimeout(timeout)
+        timeout = setTimeout(() => {
             visible.value = false;
         }, duracion.value);
+    }
+
+    // const startTimeout = () => {
+    //     visible.value = true;
+    //     startTime = Date.now();
+    //     timeout = setTimeout(() => {
+    //         visible.value = false;
+    //     }, remaining);
+    // }
+
+    const pauseTimeout = () => {
+        clearTimeout(timeout)
+        const elapsed = Date.now() - startTime
+        remaining -= elapsed
+    }
+
+    const resumeTimeout = () => {
+        startTime = Date.now()
+        timeout = setTimeout(() => {
+            visible.value = false
+        }, remaining)
     }
 
     return {
         visible,
         tipo,
         mensaje,
+        duracion,
         showAlert,
+        // startTimeout,
+        pauseTimeout,
+        resumeTimeout
     };
 }

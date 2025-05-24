@@ -106,14 +106,14 @@ const formData = reactive({
 <template>
     <LoadingView :msg="'Cargando...'" :isLoad="isLoading" @close="isLoading = false" class="z-20" />
     <div class="flex items-center justify-center my-10 w-full h-full">
-        <div class="bg-[rgba(200,200,200,0.5)] p-6 rounded-lg shadow-lg w-[850px] relative">
-            <a href="/" class="absolute top-3 left-3">
+        <div class="bg-[rgb(255,245,240)] p-6 rounded-lg shadow-lg w-[850px] relative">
+            <router-link to="/" class="absolute top-3 left-3">
                 <svg width="40" height="40" viewBox="0 0 24 25" fill="none" transform="rotate(0 0 0)"
                     class="fill-[#ff6e00] hover:fill-[rgb(255,140,0)] transition-colors duration-200">
                     <path
                         d="M2 12.5C2 6.97766 6.47729 2.50098 11.9996 2.50098C17.5218 2.50098 21.9991 6.97766 21.9991 12.5C21.9991 18.0224 17.5218 22.4991 11.9996 22.4991C6.47729 22.4991 2 18.0224 2 12.5ZM11.4982 9.15521C11.2178 9.03915 10.8952 9.10341 10.6808 9.31801L8.04259 11.9578C7.89904 12.0945 7.80957 12.2874 7.80957 12.5012C7.80957 12.7277 7.90996 12.9307 8.06867 13.0682L10.6807 15.6821C10.8952 15.8967 11.2178 15.961 11.4981 15.8449C11.7785 15.7289 11.9612 15.4554 11.9612 15.152V13.2512L15.4402 13.2512C15.8544 13.2512 16.1902 12.9154 16.1902 12.5012C16.1902 12.087 15.8544 11.7512 15.4402 11.7512H11.9612V9.84817C11.9612 9.54478 11.7785 9.27127 11.4982 9.15521Z" />
                 </svg>
-            </a>
+            </router-link>
             <h2 class="mb-5 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Registro de usuario</h2>
             <form @submit.prevent="registro" class="gap-4 grid grid-cols-3">
                 <div v-for="(field, index) in formSchema" :key="index">
@@ -131,4 +131,8 @@ const formData = reactive({
     </div>
 </template>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+    input {
+        background: white;
+    }
+</style>

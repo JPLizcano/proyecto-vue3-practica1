@@ -43,8 +43,12 @@
                     }
                 </style> -->
             </div>
-            <div class="contHoverme mt-5 flex justify-center">
-                <p class="hoverme relative">Hover me</p>
+            <div class="mt-5 flex justify-center">
+                <p class="hoverme relative mr-5">Hover me</p>
+                <p class="borroso relative">Hover me</p>
+            </div>
+            <div class="mt-5 flex justify-center">
+                <h1 class="degradado" contenteditable>Degradado IMG</h1>
             </div>
         </main>
         <footer>Footer</footer>
@@ -101,7 +105,8 @@ option {
     color: black;
 }
 
-.hoverme {
+.hoverme,
+.borroso {
     font-weight: bold;
     cursor: default;
 }
@@ -120,5 +125,30 @@ option {
 
 .hoverme:hover::after {
     transform: scaleX(1);
+}
+
+.borroso {
+    filter: blur(2px);
+    transition: filter 0.3s ease;
+}
+
+.borroso:hover {
+    filter: blur(0);
+}
+
+.degradado {
+    font-size: 5rem;
+    background: url('https://lh3.googleusercontent.com/proxy/lkXNoGtq27M5u3JfLl6HgTgDTuKXsuwLUE3LJmqpF6wl3i3dooOroj_NDOSYUK696zQbU-MBi6uQQkBK8YXGseeF8Yyt2JMr_-LhITW8HL-ntU_hXoF8cV6ez9FO') center;
+    background-size: cover;
+    background-clip: text;
+    color: transparent;
+    font-weight: bolder;
+    animation: animate 25s linear infinite;
+}
+
+@keyframes animate {
+    to {
+        background-position-x: -200px;
+    }
 }
 </style>

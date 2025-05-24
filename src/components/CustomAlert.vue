@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { useAlert } from '../composables/useAlert';
 
-const { visible, tipo, mensaje } = useAlert();
+const { visible, tipo, mensaje, pauseTimeout, resumeTimeout } = useAlert();
 
 const claseAlerta = computed(() => {
     return {
@@ -16,7 +16,8 @@ const claseAlerta = computed(() => {
 
 <template>
     <transition name="fade">
-        <div v-if="visible" :class="['absolute px-4 py-2 rounded msg text-sm text-center', claseAlerta]">
+        <div v-if="visible" :class="['absolute px-4 py-2 rounded msg text-sm text-center cursor-default', claseAlerta]"
+            @mouseenter="pauseTimeout" @mouseleave="resumeTimeout">
             {{ mensaje }}
         </div>
     </transition>
