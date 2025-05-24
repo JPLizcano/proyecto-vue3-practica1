@@ -46,7 +46,7 @@ onMounted(() => {
 .carousel-inner {
     height: 243px;
     border-radius: 9px;
-    box-shadow: 0px 0px 15px 0px gray;
+    box-shadow: 0px 0px 15px 0px rgb(200,200,200);
 }
 
 .left-full {

@@ -24,8 +24,8 @@ input {
 .btns {
     cursor: pointer;
     transition: 0.3s;
-    background-color: rgb(255, 110, 0);
-    border: 1px solid rgb(255, 90, 0);
+    background-color: rgb(255, 100, 0);
+    border: 1px solid rgb(255, 100, 0);
     color: white;
     display: flex;
     width: 100%;
@@ -41,7 +41,8 @@ input {
 }
 
 .btns:hover {
-    background-color: rgb(255, 140, 0);
+    background-color: rgb(255, 120, 0);
+    border-color: rgb(255, 120, 0);
 }
 
 .btns:focus {
