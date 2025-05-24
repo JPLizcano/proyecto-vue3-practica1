@@ -144,11 +144,11 @@ const formData = reactive({
                 <div v-for="(field, index) in formSchema" :key="index"
                     :class="[field.name == 'Clave' ? 'relative' : '']">
                     <label :for="field.name" class="block text-sm font-bold mb-2">{{ field.label }}</label>
-                    <input :type="field.name == 'Clave' || field.name == 'ConfirmarClave' ? !showPass ? 'password' : 'text' : field.type" :name="field.name" :placeholder="field.placeholder"
-                        v-model="formData[field.name]" :class="['border rounded w-full py-2 px-3']"
-                        style="border-color: rgb(150,150,150);" />
-                    <button v-show="field.name == 'Clave'" class="pasBtn"
-                        @click="showP" type="button">
+                    <input
+                        :type="field.name == 'Clave' || field.name == 'ConfirmarClave' ? !showPass ? 'password' : 'text' : field.type"
+                        :name="field.name" :placeholder="field.placeholder" v-model="formData[field.name]"
+                        :class="['border rounded w-full py-2 px-3']" style="border-color: rgb(150,150,150);" />
+                    <button v-show="field.name == 'Clave'" class="pasBtn" @click="showP" type="button">
                         <Eye v-show="!showPass" />
                         <EyeSlash v-show="showPass" />
                     </button>

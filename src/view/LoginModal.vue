@@ -49,6 +49,7 @@ const login = async () => {
         setTimeout(() => {
             user.value = ""
             pass.value = ""
+            showPass.value = false;
             closeModal()
             isLoading.value = false;
             router.push('/');
@@ -97,7 +98,8 @@ function showP() {
                         <label for="Clave" class="block text-sm/6 font-medium text-gray-900">Contraseña</label>
                     </div>
                     <div class="mt-1 relative">
-                        <input :type="!showPass ? 'password' : 'text'" name="Clave" id="Clave" autocomplete="current-Clave" v-model="pass"
+                        <input :type="!showPass ? 'password' : 'text'" name="Clave" id="Clave"
+                            autocomplete="current-Clave" v-model="pass"
                             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-transparent sm:text-sm/6">
                         <button class="pasBtn" @click="showP" type="button">
                             <eye v-show="!showPass" />

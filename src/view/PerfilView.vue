@@ -7,12 +7,19 @@ import { API_URL } from '../config/api';
 import LoadingView from '../components/LoadingView.vue';
 import CustomAlert from '../components/CustomAlert.vue';
 import { useAlert } from '../composables/useAlert';
+import Eye from '../assets/svg/eye.vue';
+import EyeSlash from '../assets/svg/eyeSlash.vue';
 
 const authStore = useAuthStore();
 const router = useRouter();
 const { showAlert } = useAlert();
 
 const isLoading = ref(false);
+const showPass = ref(false);
+
+function showP() {
+    showPass.value = !showPass.value
+}
 
 onMounted(async () => {
     // await authStore.checkSession();
@@ -54,6 +61,7 @@ const formSchema: {
         { name: 'Ciudad', label: 'Ciudad', type: 'text', placeholder: 'Ingrese su Ciudad' },
         { name: 'Departamento', label: 'Departamento', type: 'text', placeholder: 'Ingrese su Departamento' },
         { name: 'Clave', label: 'Contraseña', type: 'password', placeholder: 'Ingrese una contraseña' },
+        { name: 'ConfirmarClave', label: 'Confirmar contraseña', type: 'password', placeholder: 'Confirme la contraseña' },
     ];
 
 const formData = reactive({
@@ -64,12 +72,19 @@ const formData = reactive({
     Barrio: '',
     Ciudad: '',
     Departamento: '',
-    Clave: ''
+    Clave: '',
+    ConfirmarClave: ''
 });
 
 const ActualizarDatos = async () => {
     try {
         isLoading.value = true;
+
+        if (formData.Clave != formData.ConfirmarClave) {
+            showAlert(`Las contraseñas deben ser iguales`, "error");
+            isLoading.value = false;
+            return false;
+        }
         const response = await axios.post(`${API_URL}/usuarios/actualizar`, {
             Cedula: formData.Cedula,
             Celular: formData.Celular,
@@ -100,6 +115,7 @@ const ActualizarDatos = async () => {
             }
             isLoading.value = false;
         }, 500);
+        showPass.value = false;
     } catch (error) {
         showAlert("Error al actualizar los datos", "error")
         console.log(error);
@@ -121,11 +137,17 @@ const ActualizarDatos = async () => {
             </router-link>
             <h2 class="mb-5 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Perfil de usuario</h2>
             <form @submit.prevent="ActualizarDatos" class="gap-4 grid grid-cols-3">
-                <div v-for="(field, index) in formSchema" :key="index">
+                <div v-for="(field, index) in formSchema" :key="index"
+                    :class="[field.name == 'Clave' ? 'relative' : '']">
                     <label :for="field.name" class="block text-sm font-bold mb-2">{{ field.label }}</label>
-                    <input :type="field.type" :name="field.name" :placeholder="field.placeholder"
-                        v-model="formData[field.name]" class="border rounded w-full py-2 px-3"
-                        style="border-color: rgb(150,150,150);" />
+                    <input
+                        :type="field.name == 'Clave' || field.name == 'ConfirmarClave' ? !showPass ? 'password' : 'text' : field.type"
+                        :name="field.name" :placeholder="field.placeholder" v-model="formData[field.name]"
+                        :class="['border rounded w-full py-2 px-3']" style="border-color: rgb(150,150,150);" />
+                    <button v-show="field.name == 'Clave'" class="pasBtn" @click="showP" type="button">
+                        <Eye v-show="!showPass" />
+                        <EyeSlash v-show="showPass" />
+                    </button>
                 </div>
                 <div class="col-span-3 relative flex justify-center">
                     <CustomAlert class="z-10 top-12" />
@@ -139,5 +161,12 @@ const ActualizarDatos = async () => {
 <style lang="css" scoped>
 input {
     background: white;
+}
+
+.pasBtn {
+    cursor: pointer;
+    position: absolute;
+    top: 40px;
+    right: 8px;
 }
 </style>
