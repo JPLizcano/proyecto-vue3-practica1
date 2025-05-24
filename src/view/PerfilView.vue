@@ -127,7 +127,7 @@ const ActualizarDatos = async () => {
 <template>
     <LoadingView :msg="'Actualizando...'" :isLoad="isLoading" @close="isLoading = false" class="z-20" />
     <div class="flex items-center justify-center my-10 w-full h-full">
-        <div class="bg-[rgb(255,245,240)] p-6 rounded-lg shadow-lg w-[850px] relative">
+        <div class="bg-[rgb(255,245,240)] p-6 rounded-lg w-[850px] relative contPerfil">
             <router-link to="/" class="absolute top-3 left-3">
                 <svg width="40" height="40" viewBox="0 0 24 25" fill="none" transform="rotate(0 0 0)"
                     class="fill-[#ff6e00] hover:fill-[rgb(255,140,0)] transition-colors duration-200">
@@ -168,5 +168,9 @@ input {
     position: absolute;
     top: 40px;
     right: 8px;
+}
+
+.contPerfil {
+    box-shadow: 0px 0px 15px 0px rgb(180,180,180);
 }
 </style>
