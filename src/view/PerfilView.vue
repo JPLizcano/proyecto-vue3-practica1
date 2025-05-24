@@ -82,7 +82,13 @@ const ActualizarDatos = async () => {
             withCredentials: true
         })
         const data = response.data[0][0];
+
+        if (!response.data[0][0].Mensaje) {
+            window.location.reload();
+            return;
+        }
         if (response.data[0][0].Mensaje !== "Datos actualizados con éxito") {
+            console.log(data)
             showAlert(response.data[0][0].Mensaje, "error", 3000)
         } else {
             Object.keys(formData).forEach((key) => {

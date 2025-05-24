@@ -51,13 +51,7 @@ watch(() => props.items, (newItems) => {
                 class="flex justify-between px-4 py-2 text-base"
                 :style="{ color: item.color || '#1f2937', backgroundColor: isHovering === item.label ? item.bg || '#f3f4f6' : 'transparent', transition: 'all 0.3s ease' }"
                 @mouseenter="isHovering = item.label" @mouseleave="isHovering = ''">
-                <div v-if="item.label == 'Perfil'" class="flex">
-                    <WorkingIcon :style="{ color: item.color || '#ff6400' }" class="w-6 h-6" />
-                </div>
                 {{ item.label }}
-                <div v-if="item.label == 'Perfil'" class="flex">
-                    <WorkingIcon :style="{ color: item.color || '#ff6400' }" class="w-6 h-6" />
-                </div>
             </a>
         </div>
     </div>

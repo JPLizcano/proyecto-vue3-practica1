@@ -74,8 +74,6 @@ const productosPorCategoria = computed(() => {
   }, {});
 });
 
-import { useAlert } from '../composables/useAlert';
-
 onMounted(async () => {
   await fetchProductos()
   await fetchTipoProducto()
@@ -92,7 +90,7 @@ onMounted(async () => {
       <div class="animate-pulse bg-gray-300 h-9 w-40 rounded"></div>
     </div>
     <div class="grid place-items-center gap-3 contGrid">
-      <div v-for="n in 10" :key="n" class="pb-5">
+      <div v-for="n in 6" :key="n" class="pb-5">
         <div class="animate-pulse bg-gray-300 h-7 w-60 rounded mb-2"></div>
         <div class="animate-pulse bg-gray-300 h-60 w-60 rounded p-4">
           <div class="flex justify-center items-center">
