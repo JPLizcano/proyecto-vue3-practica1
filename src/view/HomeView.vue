@@ -92,7 +92,7 @@ onMounted(async () => {
     <div class="grid place-items-center gap-3 contGrid">
       <div v-for="n in 6" :key="n" class="pb-5">
         <div class="animate-pulse bg-gray-300 h-7 w-60 rounded mb-2"></div>
-        <div class="animate-pulse bg-gray-300 h-60 w-60 rounded p-4">
+        <div class="contCard animate-pulse bg-gray-300 h-60 w-60 rounded-[9px] p-4">
           <div class="flex justify-center items-center">
             <div class="bg-gray-400 h-32 w-32 rounded"></div>
           </div>
@@ -121,6 +121,10 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.contCard {
+  box-shadow: 0px 0px 20px 0px gray;
+}
+
 @media (min-width: 2500px) {
   .contGrid {
     grid-template-columns: repeat(9, minmax(0, 1fr));
