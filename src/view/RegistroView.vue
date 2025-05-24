@@ -7,11 +7,18 @@ import LoadingView from '../components/LoadingView.vue';
 import axios from 'axios';
 import { API_URL } from '../config/api';
 import { useAuthStore } from '../store/useAuthStore';
+import Eye from '../assets/svg/eye.vue';
+import EyeSlash from '../assets/svg/eyeSlash.vue';
 
 const { showAlert } = useAlert();
 const authStore = useAuthStore();
 const router = useRouter();
 const isLoading = ref(false);
+const showPass = ref(false);
+
+function showP() {
+    showPass.value = !showPass.value
+}
 
 onMounted(async () => {
     await authStore.checkSession();
@@ -25,10 +32,26 @@ const registro = async () => {
         isLoading.value = true;
         for (const [key, value] of Object.entries(formData)) {
             if (!value) {
+                if (key == "Clave") {
+                    showAlert(`El campo contraseña es obligatorio.`, "error", 2000);
+                    isLoading.value = false;
+                    return false;
+                }
+                if (key == "ConfirmarClave") {
+                    showAlert(`El campo confirmar contraseña es obligatorio.`, "error", 2000);
+                    isLoading.value = false;
+                    return false;
+                }
                 showAlert(`El campo ${key} es obligatorio.`, "error", 2000);
                 isLoading.value = false;
                 return false;
             }
+        }
+
+        if (formData.Clave != formData.ConfirmarClave) {
+            showAlert(`Las contraseñas deben ser iguales`, "error", 2000);
+            isLoading.value = false;
+            return false;
         }
 
         const response = await axios.post(`${API_URL}/usuarios/registrar`, {
@@ -78,7 +101,7 @@ const formSchema: {
 }[] = [
         { name: 'Nombre', label: 'Nombre', type: 'text', placeholder: 'Ingrese su nombre' },
         { name: 'Apellido', label: 'Apellido', type: 'text', placeholder: 'Ingrese su apellido' },
-        { name: 'Celular', label: 'Celular', type: 'tel', placeholder: 'Ingrese su número de celular' },
+        { name: 'Celular', label: 'Celular', type: 'text', placeholder: 'Ingrese su número de celular' },
         { name: 'Cedula', label: 'Cédula', type: 'text', placeholder: 'Ingrese su número de documento' },
         { name: 'Correo', label: 'Correo Electrónico', type: 'email', placeholder: 'Ingrese su correo' },
         { name: 'Direccion', label: 'Dirección', type: 'text', placeholder: 'Ingrese su Dirección' },
@@ -86,6 +109,7 @@ const formSchema: {
         { name: 'Ciudad', label: 'Ciudad', type: 'text', placeholder: 'Ingrese su Ciudad' },
         { name: 'Departamento', label: 'Departamento', type: 'text', placeholder: 'Ingrese su Departamento' },
         { name: 'Clave', label: 'Contraseña', type: 'password', placeholder: 'Ingrese una contraseña' },
+        { name: 'ConfirmarClave', label: 'Confirmar contraseña', type: 'password', placeholder: 'Confirme la contraseña' },
     ];
 
 const formData = reactive({
@@ -98,7 +122,8 @@ const formData = reactive({
     Barrio: '',
     Ciudad: '',
     Departamento: '',
-    Clave: ''
+    Clave: '',
+    ConfirmarClave: ''
 });
 
 </script>
@@ -116,11 +141,17 @@ const formData = reactive({
             </router-link>
             <h2 class="mb-5 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Registro de usuario</h2>
             <form @submit.prevent="registro" class="gap-4 grid grid-cols-3">
-                <div v-for="(field, index) in formSchema" :key="index">
+                <div v-for="(field, index) in formSchema" :key="index"
+                    :class="[field.name == 'Clave' ? 'relative' : '']">
                     <label :for="field.name" class="block text-sm font-bold mb-2">{{ field.label }}</label>
-                    <input :type="field.type" :name="field.name" :placeholder="field.placeholder"
-                        v-model="formData[field.name]" class="border rounded w-full py-2 px-3"
+                    <input :type="field.name == 'Clave' || field.name == 'ConfirmarClave' ? !showPass ? 'password' : 'text' : field.type" :name="field.name" :placeholder="field.placeholder"
+                        v-model="formData[field.name]" :class="['border rounded w-full py-2 px-3']"
                         style="border-color: rgb(150,150,150);" />
+                    <button v-show="field.name == 'Clave'" class="pasBtn"
+                        @click="showP" type="button">
+                        <Eye v-show="!showPass" />
+                        <EyeSlash v-show="showPass" />
+                    </button>
                 </div>
                 <div class="col-span-3 relative flex justify-center">
                     <CustomAlert class="z-10 top-12" />
@@ -132,7 +163,14 @@ const formData = reactive({
 </template>
 
 <style lang="css" scoped>
-    input {
-        background: white;
-    }
+input {
+    background: white;
+}
+
+.pasBtn {
+    cursor: pointer;
+    position: absolute;
+    top: 40px;
+    right: 8px;
+}
 </style>

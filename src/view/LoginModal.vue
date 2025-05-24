@@ -7,6 +7,8 @@ import CustomAlert from '../components/CustomAlert.vue';
 import LoadingView from '../components/LoadingView.vue';
 import { useAuthStore } from '../store/useAuthStore';
 import { useRouter } from 'vue-router';
+import eye from '../assets/svg/eye.vue';
+import eyeSlash from '../assets/svg/eyeSlash.vue';
 
 const props = withDefaults(defineProps<{
     isOpen: boolean
@@ -20,6 +22,7 @@ const authStore = useAuthStore();
 const isLoading = ref(false);
 const user = ref("");
 const pass = ref("");
+const showPass = ref(false);
 
 const login = async () => {
     try {
@@ -65,6 +68,10 @@ function closeModal() {
     emit('close')
 }
 
+function showP() {
+    showPass.value = !showPass.value
+}
+
 </script>
 
 <template>
@@ -89,9 +96,13 @@ function closeModal() {
                     <div class="flex items-center justify-between">
                         <label for="Clave" class="block text-sm/6 font-medium text-gray-900">Contraseña</label>
                     </div>
-                    <div class="mt-1">
-                        <input type="password" name="Clave" id="Clave" autocomplete="current-Clave" v-model="pass"
+                    <div class="mt-1 relative">
+                        <input :type="!showPass ? 'password' : 'text'" name="Clave" id="Clave" autocomplete="current-Clave" v-model="pass"
                             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-transparent sm:text-sm/6">
+                        <button class="pasBtn" @click="showP" type="button">
+                            <eye v-show="!showPass" />
+                            <eyeSlash v-show="showPass" />
+                        </button>
                     </div>
                 </div>
 
@@ -103,7 +114,8 @@ function closeModal() {
                         <div class="w-full flex justify-center mt-4 text-sm">
                             No tengo cuenta.
                             <button @click="closeModal">
-                                <router-link to="/registro" class="ml-1 text-[rgb(255,90,0)] hover:text-[rgb(255,120,0)] font-bold">
+                                <router-link to="/registro"
+                                    class="ml-1 text-[rgb(255,90,0)] hover:text-[rgb(255,120,0)] font-bold">
                                     Registrarme
                                 </router-link>
                             </button>
@@ -116,4 +128,11 @@ function closeModal() {
     </div>
 </template>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.pasBtn {
+    cursor: pointer;
+    position: absolute;
+    top: 9px;
+    right: 8px;
+}
+</style>

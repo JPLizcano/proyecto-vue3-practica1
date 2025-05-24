@@ -6,7 +6,7 @@ const mensaje = ref('');
 const duracion = ref(2500);
 
 let timeout: ReturnType<typeof setTimeout>;
-let startTime: number;
+let startTime: number = Date.now();
 let remaining = duracion.value;
 
 export function useAlert() {
@@ -22,18 +22,9 @@ export function useAlert() {
         }, duracion.value);
     }
 
-    // const startTimeout = () => {
-    //     visible.value = true;
-    //     startTime = Date.now();
-    //     timeout = setTimeout(() => {
-    //         visible.value = false;
-    //     }, remaining);
-    // }
-
     const pauseTimeout = () => {
         clearTimeout(timeout)
-        const elapsed = Date.now() - startTime
-        remaining -= elapsed
+        remaining = Date.now() - startTime;
     }
 
     const resumeTimeout = () => {
@@ -49,7 +40,6 @@ export function useAlert() {
         mensaje,
         duracion,
         showAlert,
-        // startTimeout,
         pauseTimeout,
         resumeTimeout
     };
