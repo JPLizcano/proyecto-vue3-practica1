@@ -19,6 +19,7 @@ const active = ref(0)
 const props = defineProps<Props>()
 
 onMounted(() => {
+    console.log(props.producto)
     if (props.long <= 1) return;
 
     let i = 1;
@@ -44,6 +45,7 @@ onMounted(() => {
 
 <style scoped>
 .carousel-inner {
+    background: rgb(255,250,245);
     height: 243px;
     border-radius: 9px;
     box-shadow: 0px 0px 15px 0px rgb(200,200,200);

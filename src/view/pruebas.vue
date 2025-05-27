@@ -50,6 +50,7 @@
             <div class="mt-5 flex justify-center">
                 <h1 class="degradado" contenteditable>Degradado IMG</h1>
             </div>
+            <p>presione <kbd>ctrl</kbd></p>
         </main>
         <footer>Footer</footer>
     </div>
@@ -150,5 +151,15 @@ option {
     to {
         background-position-x: -200px;
     }
+}
+
+kbd {
+    background-color: white;
+    border: 1px solid rgb(150, 150, 150);
+    border-radius: 5px;
+    box-shadow: 0 2px rgb(200, 200, 200);
+    padding: 4px 8px;
+    margin: 0 2px;
+    font-size: 16px;
 }
 </style>

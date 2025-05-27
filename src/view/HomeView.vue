@@ -79,7 +79,7 @@ onMounted(async () => {
   await fetchTipoProducto()
   setTimeout(async () => {
     isLoading.value = false
-  }, 1500);
+  }, 500);
 })
 
 </script>
@@ -110,21 +110,18 @@ onMounted(async () => {
       <h1 class="text-3xl font-bold">Productos</h1>
     </div>
     <div class="grid place-items-center gap-3 contGrid">
-      <div v-for="(item, categoria) in productosPorCategoria" :key="categoria" :id="categoria.toString()">
+      <router-link v-for="(item, categoria) in productosPorCategoria" :key="categoria" :id="categoria.toString()"
+        :to="`/productos/${categoria}`">
         <h2 class="text-xl font-bold mb-2 text-center">{{ categoria }}</h2>
         <CarouselImgs :long="item.productos.length" :key="item.productos.toString()" :producto="item.productos"
           :id="`slide-${categoria.toString()}`" />
-      </div>
+      </router-link>
     </div>
 
   </div>
 </template>
 
 <style scoped>
-.contCard {
-  box-shadow: 0px 0px 20px 0px gray;
-}
-
 @media (min-width: 2500px) {
   .contGrid {
     grid-template-columns: repeat(9, minmax(0, 1fr));

@@ -2,11 +2,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../view/HomeView.vue';
 import Registro from '../view/RegistroView.vue';
 import Perfil from '../view/PerfilView.vue';
+import prodCat from '../view/productosCategoria.vue';
 // import Pruebas from "../view/pruebas.vue";
 import { useAuthStore } from '../store/useAuthStore';
 
 const routes = [
     { path: '/', name: 'Home', component: Home },
+    { path: '/productos/:categoria', name: 'ProductosPorCategoria', component: prodCat },
     { path: '/registro', name: 'Registro', component: Registro },
     { path: '/perfil', name: 'Perfil', component: Perfil, meta: { requiresAuth: true } },
     // { path: '/pruebas', name: 'Pruebas', component: Pruebas, meta: { requiresAuth: true } },
