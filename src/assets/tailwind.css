@@ -6,9 +6,20 @@
     display: none;
 }
 
+:root {
+    --col1: rgb(255,250,245);
+    --col2: rgb(252, 233, 215);
+    --naranja1: rgb(245 74 0);
+}
+
 html {
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
+}
+
+html::selection {
+    background-color: var(--col2);
+    color: var(--naranja1);
 }
 
 .msg {
